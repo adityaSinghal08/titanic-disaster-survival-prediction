@@ -1,0 +1,19 @@
+1. Pclass: Higher class passengers had a significantly higher survival rate, with 1st class passengers having the highest survival percentage.
+
+2. Sex: Female passengers had a much higher survival rate compared to male passengers.
+
+3. Embarked: Passengers who embarked from Cherbourg (C) had a higher survival rate compared to those from Southampton (S) and Queenstown (Q).
+
+4. Title: Passengers with titles indicating higher social status (e.g., 'Mrs', 'Miss', 'Master') had higher survival rates compared to those with lower status titles (e.g., 'Mr', 'Rare').
+
+5. IsAloneFamily and IsAloneGroup: Passengers who were not alone (IsAloneFamily = 0 or IsAloneGroup = 0) had a higher survival rate compared to those who were alone (IsAloneFamily = 1 or IsAloneGroup = 1).
+
+6. Age: Younger passengers tend to have a higher survival rate, with a noticeable drop in survival rate as age increases.
+
+7. SibSp: Passengers with 1 or 2 siblings/spouses aboard have a higher survival rate compared to those with none or many.
+
+8. Parch: Similar to SibSp, passengers with 1 or 2 parents/children aboard have a higher survival rate.
+
+9. Fare: There is a positive correlation between fare paid and survival rate, with higher fares associated with higher survival rates.
+
+10. FamilySize and GroupSize: Passengers with smaller family or group sizes tend to have higher survival rates, indicating that traveling alone or in small groups may have been advantageous.

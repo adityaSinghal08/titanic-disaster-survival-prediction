@@ -32,7 +32,13 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
         # Ticket-based group size
         # -------------------------------
         # Missing Ticket ⇒ assume solo traveler
-        X['Ticket'] = X['Ticket'].fillna('UNKNOWN')
+        # Create a unique placeholder for missing tickets
+        missing_mask = X['Ticket'].isna()
+        X.loc[missing_mask, 'Ticket'] = (
+            'UNKNOWN_' + X.loc[missing_mask].index.astype(str)
+        )
+
+        # Now compute group size
         X['GroupSize'] = X.groupby('Ticket')['Ticket'].transform('count')
 
         # -------------------------------

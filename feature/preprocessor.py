@@ -13,15 +13,13 @@ class PreProcessor(BaseEstimator, TransformerMixin):
 
     Responsibilities:
     - Run FeatureGenerator
-    - Impute missing values
+    - Impute any remaining missing cell values
     - Scale numeric features (optional)
     - Encode categorical features
-    - Enforce final feature set
-    
-    Designed to be:
-    - Pipeline-safe
-    - GridSearch-compatible
-    - Leakage-proof
+    - Enforce final feature schema
+
+    Assumptions:
+    - Input schema is stable (columns always exist)
     """
 
     def __init__(self, scaling=True):
@@ -33,7 +31,6 @@ class PreProcessor(BaseEstimator, TransformerMixin):
         # Feature groups
         # -------------------------------
 
-        # Continuous / count features
         num_cols = [
             'Age',
             'Fare',
@@ -41,16 +38,13 @@ class PreProcessor(BaseEstimator, TransformerMixin):
             'GroupSize'
         ]
 
-        # Ordinal feature (hierarchy matters)
         ordinal_cols = ['Pclass']
 
-        # Binary indicators
         binary_cols = [
             'IsAloneFamily',
             'IsAloneGroup'
         ]
 
-        # Nominal categorical features
         cat_cols = [
             'Sex',
             'Embarked',
@@ -75,6 +69,20 @@ class PreProcessor(BaseEstimator, TransformerMixin):
         ])
 
         # -------------------------------
+        # Ordinal pipeline (safe fallback)
+        # -------------------------------
+        ord_pipe = Pipeline([
+            ('impute', SimpleImputer(strategy='most_frequent'))
+        ])
+
+        # -------------------------------
+        # Binary pipeline (safe fallback)
+        # -------------------------------
+        bin_pipe = Pipeline([
+            ('impute', SimpleImputer(strategy='most_frequent'))
+        ])
+
+        # -------------------------------
         # Full preprocessing pipeline
         # -------------------------------
         self.pipeline_ = Pipeline([
@@ -83,9 +91,10 @@ class PreProcessor(BaseEstimator, TransformerMixin):
                 transformers=[
                     ('num', num_pipe, num_cols),
                     ('cat', cat_pipe, cat_cols),
-                    ('ord', 'passthrough', ordinal_cols),
-                    ('bin', 'passthrough', binary_cols)
-                ]
+                    ('ord', ord_pipe, ordinal_cols),
+                    ('bin', bin_pipe, binary_cols)
+                ],
+                remainder='drop'
             ))
         ])
 

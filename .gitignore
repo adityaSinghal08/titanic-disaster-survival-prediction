@@ -1,0 +1,15 @@
+# Output artifacts
+output/
+
+# Editor settings
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Github
+.github/

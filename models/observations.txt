@@ -104,3 +104,7 @@ Final Accuracy Ranking:
 4. Decision Tree – 0.8216
 5. Random Forest – 0.8188
 6. KNN – 0.8126
+
+--------------------------------------------------
+
+As per Kaggle Submissions, out top 3 models are XGBoost, Random Forest and KNN (in decreasing order of accuracy).
